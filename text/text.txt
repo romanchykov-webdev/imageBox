@@ -14,3 +14,5 @@ npm i expo-linear-gradient
 
 
 npm i @expo/vector-icons
+
+npm i react-native-safe-area-context

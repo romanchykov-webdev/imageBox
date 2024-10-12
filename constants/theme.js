@@ -3,8 +3,9 @@ export const theme = {
         white: '#fff',
         black: '#000',
         grayBG:'#e5e5e5',
+        accent:'#FFD700',
         //neutral
-        neutral:(opacity)=>`rgba(10,10,10 ${opacity})`
+        neutral:(opacity)=>`rgba(10,10,10, ${opacity})`
     },
     fontWeights: {
         medium: '500',
