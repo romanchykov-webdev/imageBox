@@ -16,3 +16,25 @@ npm i expo-linear-gradient
 npm i @expo/vector-icons
 
 npm i react-native-safe-area-context
+
+
+
+npm install axios
+
+grid tile  Masonry Layout
+npx expo install @shopify/flash-list expo-dev-client
+
+
+for Caching image
+npx expo install expo-image
+
+for debounce
+npm install lodash
+
+bottom-sheet
+npm i @gorhom/bottom-sheet
+npx expo install react-native-reanimated react-native-gesture-handler
+
+
+expo view blur
+npx expo install expo-blur
