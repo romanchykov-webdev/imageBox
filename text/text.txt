@@ -1,0 +1,16 @@
+npx create-expo-app ./              //установка в туже папку
+
+npx expo start -c
+
+
+npm install react-native-reanimated
+
+plugins: [
+      'react-native-reanimated/plugin',
+    ],
+
+
+npm i expo-linear-gradient
+
+
+npm i @expo/vector-icons
