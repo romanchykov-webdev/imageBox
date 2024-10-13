@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     ScrollView,
     TextInput,
-    TouchableWithoutFeedbackBase, TouchableWithoutFeedback, Keyboard
+    TouchableWithoutFeedbackBase, TouchableWithoutFeedback, Keyboard, StatusBar
 } from 'react-native';
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {Feather, FontAwesome6, Ionicons} from "@expo/vector-icons";
@@ -19,10 +19,13 @@ import ImageGrid from "../../components/imageGrid";
 import {debounce} from 'lodash'
 import LoaderStandard from "../../components/LoaderStandard";
 import FiltersModal from "../../components/filtersModal";
+import {useRouter} from "expo-router";
 
 var page = 1;
 
 const HomeScreen = () => {
+
+    const router = useRouter()
 
     const [loading, setLoading] = useState(false)
 
@@ -264,6 +267,7 @@ const HomeScreen = () => {
 
     return (
         <View style={[styles.container, {paddingTop}]}>
+
             {/*    header   */}
             <View style={styles.header}>
                 <TouchableOpacity
@@ -292,6 +296,7 @@ const HomeScreen = () => {
                 scrollEventThrottle={5} //how often scroll event will fire whiel scrolling (in ms)
                 ref={scrollRef}
             >
+                <StatusBar barStyle="dark-content" />
                 {/*    search bar   */}
                 <View style={styles.searchBar}>
                     <View style={styles.searchIcon}>
@@ -384,8 +389,8 @@ const HomeScreen = () => {
                         // loading
                         //     ? (<LoaderStandard/>)
                         //     : (
-                                images.length > 0 && <ImageGrid images={images}/>
-                            // )
+                        images.length > 0 && <ImageGrid images={images} router={router}/>
+                        // )
                     }
                 </View>
                 {/*loading new images */}

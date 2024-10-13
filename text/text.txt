@@ -36,7 +36,7 @@ npm i @gorhom/bottom-sheet
 npx expo install react-native-reanimated react-native-gesture-handler
 
 
-expo view blur
+// expo view blur
 npx expo install expo-blur
 
 

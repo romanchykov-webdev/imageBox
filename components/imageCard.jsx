@@ -5,11 +5,11 @@ import {Image} from 'expo-image';
 import {getImageSize, hp, wp} from "../helpers/common";
 import {theme} from "../constants/theme";
 
-const ImageCard = ({item, index, columns}) => {
+const ImageCard = ({item, index, columns, router}) => {
 
 
-    const isLastInRow=()=>{
-        return (index+1)%columns === 0;
+    const isLastInRow = () => {
+        return (index + 1) % columns === 0;
     }
 
 
@@ -22,7 +22,13 @@ const ImageCard = ({item, index, columns}) => {
 
 
     return (
-        <TouchableOpacity style={[styles.imageWrapper, !isLastInRow() && styles.spacing]}>
+        <TouchableOpacity
+            onPress={() => router.push({
+                pathname:'home/imageScreen',
+                params:{...item}
+            })}
+            style={[styles.imageWrapper, !isLastInRow() && styles.spacing]}
+        >
             <Image
                 style={[styles.image, getImageHeight()]}
                 source={item?.webformatURL}
@@ -36,7 +42,7 @@ const ImageCard = ({item, index, columns}) => {
 };
 
 const styles = StyleSheet.create({
-    imageWrapper:{
+    imageWrapper: {
         backgroundColor: theme.colors.grayBG,
         borderRadius: theme.radius.xl,
         borderCurve: 'continuous',
@@ -44,7 +50,7 @@ const styles = StyleSheet.create({
         marginBottom: wp(2),
         // Настройки для тени на iOS и вебе
         shadowColor: 'black',
-        shadowOffset: { width: 3, height: 3 },
+        shadowOffset: {width: 3, height: 3},
         shadowOpacity: 0.5,
         shadowRadius: 3,
         // Тень для Android
@@ -57,8 +63,8 @@ const styles = StyleSheet.create({
         borderRadius: theme.radius.xl,
         overflow: 'hidden',
     },
-    spacing:{
-        marginRight:wp(2),
+    spacing: {
+        marginRight: wp(2),
     }
 
 })
