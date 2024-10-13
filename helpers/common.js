@@ -57,3 +57,8 @@ export const getImageSize = (height, width) => {
 //     // Возвращаем пропорциональную высоту для ширины колонки
 //     return columnWidth / aspectRatio;
 // }
+
+
+export const capitalize = str => {
+    return str.replace(/\b\w/g, l => l.toUpperCase());
+}

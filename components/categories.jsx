@@ -49,7 +49,8 @@ const CategoryItem = ({title, index, isActive, handleChangeCategory}) => {
 
 const styles = StyleSheet.create({
     flatListContainer: {
-        gap: 8
+        gap: 8,
+        padding:4,
     },
     category: {
         padding: 12,
@@ -58,7 +59,14 @@ const styles = StyleSheet.create({
         borderColor: theme.colors.grayBG,
         // backgroundColor:'white',
         borderRadius: theme.radius.lg,
-        borderCurve: 'continuous'
+        borderCurve: 'continuous',
+        // box shadow
+        shadowColor: 'black',
+        shadowRadius: 1,
+        shadowOffset: {width: 1, height: 1},
+        shadowOpacity: 0.5,
+        elevation: 5, // Для Android
+
     },
     title: {
         fontSize: hp(1.8),
