@@ -40,6 +40,10 @@ npx expo install react-native-reanimated react-native-gesture-handler
 npx expo install expo-blur
 
 
+for download file
+npx expo install expo-file-system
+
+
 
 
 
