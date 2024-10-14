@@ -43,6 +43,9 @@ npx expo install expo-blur
 for download file
 npx expo install expo-file-system
 
+popup message
+npm i react-native-toast-message
+
 
 
 

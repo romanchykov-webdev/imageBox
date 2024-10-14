@@ -11,6 +11,8 @@ import Animated, {FadeInDown, FadeInUp} from 'react-native-reanimated'
 // for download file
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from "expo-media-library";
+// for sharing
+import * as Sharing from 'expo-sharing';
 
 
 const ImageScreen = () => {
@@ -174,6 +176,13 @@ const ImageScreen = () => {
 //     handle
     const handleSharing = async () => {
         setStatus('sharing')
+        let uri = await sharingFile();
+
+        if (uri) {
+            //Sharing file
+            await Sharing.shareAsync(uri)
+        }
+
     }
 //     handle
 
