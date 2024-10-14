@@ -4,6 +4,7 @@ export const theme = {
         black: '#000',
         grayBG:'#e5e5e5',
         accent:'#FFD700',
+        shadowColor:'#000',
         //neutral
         neutral:(opacity)=>`rgba(10,10,10, ${opacity})`
     },
@@ -11,6 +12,7 @@ export const theme = {
         medium: '500',
         semibold: '600',
         bold: '700',
+
     },
     radius:{
         xs:10,

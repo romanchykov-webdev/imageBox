@@ -6,6 +6,8 @@ import {useLocalSearchParams, useRouter} from "expo-router";
 import {Image} from 'expo-image'
 import {theme} from "../../constants/theme";
 import LoaderStandard from "../../components/LoaderStandard";
+import {Entypo, Octicons} from "@expo/vector-icons";
+import Animated, {FadeInDown} from 'react-native-reanimated'
 
 const ImageScreen = () => {
 
@@ -47,8 +49,8 @@ const ImageScreen = () => {
         if (aspectRatio < 1) { //portrait image
             calculatedWidth = calculatedHeight * aspectRatio;
         }
-        if(!platformMobile){
-            calculatedHeight=hp(90);
+        if (!platformMobile) {
+            calculatedHeight = hp(80);
 
         }
 
@@ -86,13 +88,41 @@ const ImageScreen = () => {
 
             </View>
 
-            <TouchableOpacity
-                onPress={() => router.back()}
-            >
-                <Text>
-                    Back
-                </Text>
-            </TouchableOpacity>
+            <View style={styles.wrapperButtons}>
+                {/*button close*/}
+                <Animated.View
+                    entering={FadeInDown.delay(100).springify()}
+                >
+                    <TouchableOpacity
+                        onPress={() => router.back()}
+                        style={styles.button}
+                    >
+                        <Octicons name="x" size={24} color="white"/>
+                    </TouchableOpacity>
+                </Animated.View>
+
+                {/*button download*/}
+                <Animated.View
+                    entering={FadeInDown.delay(200).springify()}
+                >
+                    <TouchableOpacity
+                        style={styles.button}
+                    >
+                        <Octicons name="download" size={24} color="white"/>
+                    </TouchableOpacity>
+                </Animated.View>
+
+                {/*button download*/}
+                <Animated.View
+                    entering={FadeInDown.delay(200).springify()}
+                >
+                    <TouchableOpacity
+                        style={styles.button}
+                    >
+                        <Entypo name="share" size={24} color="white"/>
+                    </TouchableOpacity>
+                </Animated.View>
+            </View>
 
         </BlurView>
     );
@@ -107,7 +137,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: wp(4),
     },
-    wrapperImage:{
+    wrapperImage: {
         // padding:10,
         // borderWidth:1,
         // borderColor: "red",
@@ -129,12 +159,37 @@ const styles = StyleSheet.create({
 
 
     },
-    loading:{
-        position:'absolute',
-        width:'100%',
-        height:'100%',
-        justifyContent:'center',
-        alignItems:'center',
+    loading: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    wrapperButtons: {
+        flexDirection: 'row',
+        marginTop: 40,
+        gap: 50,
+    },
+    button: {
+        backgroundColor: theme.colors.neutral(0.2),
+        // padding:10,
+        width: hp(6),
+        height: hp(6),
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: theme.colors.grayBG,
+        borderRadius: theme.radius.lg,
+        borderCurve:'continuous',
+        // padding:20,
+        // box shadow
+        shadowColor: theme.colors.shadowColor,
+        // shadowColor: 'white',
+        shadowRadius: 1,
+        shadowOffset: {width: 1, height: 3},
+        shadowOpacity: 0.9,
+        elevation: 5, // Для Android
     }
 
 
