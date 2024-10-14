@@ -14,7 +14,14 @@ const LayoutRoot = () => {
                 <Stack>
 
                     <Stack.Screen name="index" options={{headerShown: false}}/>
+
                     <Stack.Screen name="home/homeScreen" options={{headerShown: false}}/>
+
+                    <Stack.Screen name="home/imageScreen" options={{
+                        headerShown: false,
+                        presentation: 'transparentModal', //появление как модальное окно
+                        animation: 'fade' // анимация затухания
+                    }}/>
 
                 </Stack>
             </BottomSheetModalProvider>
