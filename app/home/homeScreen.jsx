@@ -69,7 +69,7 @@ const HomeScreen = () => {
     const fetchImages = async (params = {page: 1}, append = true) => {
         setLoading(true)
 
-        console.log('params', params, append)
+        // console.log('params', params, append)
 
         let res = await apiCall(params);
 
@@ -227,7 +227,7 @@ const HomeScreen = () => {
 
             if (!isEndReached) {
                 setIsEndReached(true) //так останавливаем многократный вызов
-                console.log('reached the bottom of scrollView new')
+                // console.log('reached the bottom of scrollView new')
 
                 ++page;
 

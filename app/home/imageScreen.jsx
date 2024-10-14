@@ -14,6 +14,9 @@ import * as MediaLibrary from "expo-media-library";
 // for sharing
 import * as Sharing from 'expo-sharing';
 
+// pooup message
+import Toast from 'react-native-toast-message';
+
 
 const ImageScreen = () => {
 
@@ -23,7 +26,7 @@ const ImageScreen = () => {
 
     const item = useLocalSearchParams()
 
-    console.log('image data', JSON.stringify(item, null, 2))
+    // console.log('image data', JSON.stringify(item, null, 2))
 
     let uri = item?.webformatURL;
     let uriMax = item?.largeImageURL;
@@ -44,7 +47,7 @@ const ImageScreen = () => {
         // console.log('aspectRatio',aspectRatio)
 
         const maxWidth = Platform.OS === 'web' ? wp(50) : wp(92);
-        console.log('maxWidth', maxWidth)
+        // console.log('maxWidth', maxWidth)
 
         let calculatedHeight = maxWidth / aspectRatio;
         // console.log('calculatedHeight',calculatedHeight)
@@ -92,7 +95,7 @@ const ImageScreen = () => {
             document.body.removeChild(a);
 
             setStatus('')
-            Alert.alert('Успех', 'Изображение загружено в максимальном качестве!');
+            // Alert.alert('Успех', 'Изображение загружено в максимальном качестве!');
         } catch (error) {
             console.log('got error', error.message);
             Alert.alert('Ошибка', error.message);
@@ -109,15 +112,15 @@ const ImageScreen = () => {
 
         try {
             const {uri} = await FileSystem.downloadAsync(imageUri, filepath);
-            console.log('downloaded at:', uri);
+            // console.log('downloaded at:', uri);
 
             const {status} = await MediaLibrary.requestPermissionsAsync();
             if (status === 'granted') {
                 const asset = await MediaLibrary.createAssetAsync(uri);
                 await MediaLibrary.createAlbumAsync('Download', asset, false);
-                Alert.alert('Успех', 'Изображение сохранено в галерею!');
+                // Alert.alert('Успех', 'Изображение сохранено в галерею!');////
             } else {
-                Alert.alert('Разрешение отклонено', 'Доступ к медиабиблиотеке был отклонен.');
+                // Alert.alert('Разрешение отклонено', 'Доступ к медиабиблиотеке был отклонен.');
             }
 
             setStatus('')
@@ -135,10 +138,12 @@ const ImageScreen = () => {
 
         if (Platform.OS === 'web') {
             let uri = await downloadFileWeb();
-            if (uri) console.log('show toast later') //show toast later
+            // if (uri) console.log('show toast later') //show toast later
+            if (uri) showToast('Image download')
         } else {
             let uri = await downloadFileMobile();
-            if (uri) console.log('show toast later') //show toast later
+            // if (uri) console.log('show toast later') //show toast later
+            if (uri) showToast('Image download')
         }
     }
 //     handle download
@@ -153,7 +158,7 @@ const ImageScreen = () => {
         // const filepath = `${FileSystem.documentDirectory}${fileName}`;
         try {
             const {uri} = await FileSystem.downloadAsync(imageUri, filepath);
-            console.log('downloaded at:', uri);
+            // console.log('downloaded at:', uri);
 
             const {status} = await MediaLibrary.requestPermissionsAsync();
             if (status === 'granted') {
@@ -187,6 +192,26 @@ const ImageScreen = () => {
 //     handle
 
 //  Sharing file image xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+// toast-message
+    const showToast = (message) => {
+        Toast.show({
+            type: 'success',
+            text1: message,
+            position: 'bottom',
+        });
+    }
+
+    const toastConfig={
+        success:({text1,props,...rest})=>{
+            return(
+                <View style={styles.wrapperToast}>
+                    <Text style={styles.textToast}>{text1}</Text>
+                </View>
+            )
+        }
+    }
+// toast-message
 
 
     return (
@@ -279,6 +304,8 @@ const ImageScreen = () => {
                 </Animated.View>
             </View>
 
+            <Toast  config={toastConfig} visibilityTime={2500} />
+
         </BlurView>
     );
 };
@@ -345,6 +372,19 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 1, height: 3},
         shadowOpacity: 0.9,
         elevation: 5, // Для Android
+    },
+    wrapperToast:{
+        padding:15,
+        paddingHorizontal:30,
+        borderRadius:theme.radius.xl,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:theme.colors.neutral(0.8)
+    },
+    textToast:{
+        fontSize:hp(1.8),
+        fontWeight:theme.fontWeights.semibold,
+        color:theme.colors.white
     }
 
 
