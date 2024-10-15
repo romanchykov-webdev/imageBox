@@ -95,6 +95,7 @@ const ImageScreen = () => {
             document.body.removeChild(a);
 
             setStatus('')
+            console.log('image data', JSON.stringify(item, null, 2))
             // Alert.alert('Успех', 'Изображение загружено в максимальном качестве!');
         } catch (error) {
             console.log('got error', error.message);
