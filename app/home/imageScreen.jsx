@@ -103,7 +103,7 @@ const ImageScreen = () => {
         }
     };
 
-    // downloadFileMobile
+    // downloadFileMobile//
     const downloadFileMobile = async () => {
         // const imageUri = item?.largeImageURL;  // ссылка на изображение в максимальном качестве
         // const fileName = imageUri.split('/').pop();  // имя файла
