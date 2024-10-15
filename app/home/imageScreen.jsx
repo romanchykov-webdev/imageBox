@@ -14,8 +14,10 @@ import * as MediaLibrary from "expo-media-library";
 // for sharing
 import * as Sharing from 'expo-sharing';
 
-// pooup message
+// pooUp message
 import Toast from 'react-native-toast-message';
+import {handleFileAction} from "../../helpers/fileManager";
+import ButtonsBottomImage from "../../components/buttonsBottomImage";
 
 
 const ImageScreen = () => {
@@ -77,75 +79,85 @@ const ImageScreen = () => {
     const filepath = `${FileSystem.documentDirectory}${fileName}`;
 
     // downloadFileWeb
-    const downloadFileWeb = async () => {
-        // const imageUri = item?.largeImageURL;  // Используйте largeImageURL для высокого качества
-        // const fileName = imageUri.split('/').pop();  // Имя файла
-
-        try {
-            const response = await fetch(imageUri);  // Запрос на скачивание большого изображения
-            const blob = await response.blob();  // Преобразуем ответ в blob
-            const url = window.URL.createObjectURL(blob);  // Создаем временную ссылку для скачивания
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = fileName || 'downloaded_image.jpg';  // Указываем имя файла
-            document.body.appendChild(a);
-            a.click();  // Инициируем скачивание
-            window.URL.revokeObjectURL(url);  // Удаляем временную ссылку
-            document.body.removeChild(a);
-
-            setStatus('')
-            console.log('image data', JSON.stringify(item, null, 2))
-            // Alert.alert('Успех', 'Изображение загружено в максимальном качестве!');
-        } catch (error) {
-            console.log('got error', error.message);
-            Alert.alert('Ошибка', error.message);
-            setStatus('')
-        }
-    };
+    // const downloadFileWeb = async () => {
+    //     // const imageUri = item?.largeImageURL;  // Используйте largeImageURL для высокого качества
+    //     // const fileName = imageUri.split('/').pop();  // Имя файла
+    //
+    //     try {
+    //         const response = await fetch(imageUri);  // Запрос на скачивание большого изображения
+    //         const blob = await response.blob();  // Преобразуем ответ в blob
+    //         const url = window.URL.createObjectURL(blob);  // Создаем временную ссылку для скачивания
+    //         const a = document.createElement('a');
+    //         a.style.display = 'none';
+    //         a.href = url;
+    //         a.download = fileName || 'downloaded_image.jpg';  // Указываем имя файла
+    //         document.body.appendChild(a);
+    //         a.click();  // Инициируем скачивание
+    //         window.URL.revokeObjectURL(url);  // Удаляем временную ссылку
+    //         document.body.removeChild(a);
+    //
+    //         setStatus('')
+    //         console.log('image data', JSON.stringify(item, null, 2))
+    //         // Alert.alert('Успех', 'Изображение загружено в максимальном качестве!');
+    //     } catch (error) {
+    //         console.log('got error', error.message);
+    //         Alert.alert('Ошибка', error.message);
+    //         setStatus('')
+    //     }
+    // };
 
     // downloadFileMobile//
-    const downloadFileMobile = async () => {
-        // const imageUri = item?.largeImageURL;  // ссылка на изображение в максимальном качестве
-        // const fileName = imageUri.split('/').pop();  // имя файла
-
-        // const filepath = `${FileSystem.documentDirectory}${fileName}`;
-
-        try {
-            const {uri} = await FileSystem.downloadAsync(imageUri, filepath);
-            // console.log('downloaded at:', uri);
-
-            const {status} = await MediaLibrary.requestPermissionsAsync();
-            if (status === 'granted') {
-                const asset = await MediaLibrary.createAssetAsync(uri);
-                await MediaLibrary.createAlbumAsync('Download', asset, false);
-                // Alert.alert('Успех', 'Изображение сохранено в галерею!');////
-            } else {
-                // Alert.alert('Разрешение отклонено', 'Доступ к медиабиблиотеке был отклонен.');
-            }
-
-            setStatus('')
-            return uri;
-        } catch (error) {
-            console.log('got error', error.message);
-            Alert.alert('Ошибка', error.message);
-            setStatus('')
-        }
-    };
+    // const downloadFileMobile = async () => {
+    //     // const imageUri = item?.largeImageURL;  // ссылка на изображение в максимальном качестве
+    //     // const fileName = imageUri.split('/').pop();  // имя файла
+    //
+    //     // const filepath = `${FileSystem.documentDirectory}${fileName}`;
+    //
+    //     try {
+    //         const {uri} = await FileSystem.downloadAsync(imageUri, filepath);
+    //         // console.log('downloaded at:', uri);
+    //
+    //         const {status} = await MediaLibrary.requestPermissionsAsync();
+    //         if (status === 'granted') {
+    //             const asset = await MediaLibrary.createAssetAsync(uri);
+    //             await MediaLibrary.createAlbumAsync('Download', asset, false);
+    //             // Alert.alert('Успех', 'Изображение сохранено в галерею!');////
+    //         } else {
+    //             // Alert.alert('Разрешение отклонено', 'Доступ к медиабиблиотеке был отклонен.');
+    //         }
+    //
+    //         setStatus('')
+    //         return uri;
+    //     } catch (error) {
+    //         console.log('got error', error.message);
+    //         Alert.alert('Ошибка', error.message);
+    //         setStatus('')
+    //     }
+    // };
 
 //     handle download
     const handleDownload = async () => {
         setStatus('downloaded')
 
-        if (Platform.OS === 'web') {
-            let uri = await downloadFileWeb();
-            // if (uri) console.log('show toast later') //show toast later
-            if (uri) showToast('Image download')
-        } else {
-            let uri = await downloadFileMobile();
-            // if (uri) console.log('show toast later') //show toast later
-            if (uri) showToast('Image download')
-        }
+        // if (Platform.OS === 'web') {
+        //     let uri = await downloadFileWeb();
+        //     // if (uri) console.log('show toast later') //show toast later
+        //     if (uri) showToast('Image download')
+        // } else {
+        //     let uri = await downloadFileMobile();
+        //     // if (uri) console.log('show toast later') //show toast later
+        //     if (uri) showToast('Image download')
+        // }
+
+        // Универсальная функция для скачивания
+        await handleFileAction({
+            actionType: 'download',
+            imageUri,
+            fileName,
+            showToast
+        });
+        setStatus('');
+
     }
 //     handle download
 
@@ -155,40 +167,49 @@ const ImageScreen = () => {
 
 //  Sharing file image xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    const sharingFile = async () => {
-        // const filepath = `${FileSystem.documentDirectory}${fileName}`;
-        try {
-            const {uri} = await FileSystem.downloadAsync(imageUri, filepath);
-            // console.log('downloaded at:', uri);
-
-            const {status} = await MediaLibrary.requestPermissionsAsync();
-            if (status === 'granted') {
-                const asset = await MediaLibrary.createAssetAsync(uri);
-                await MediaLibrary.createAlbumAsync('Download', asset, false);
-                // Alert.alert('Успех', 'Изображение сохранено в галерею!');
-            } else {
-                Alert.alert('Разрешение отклонено', 'Доступ к медиабиблиотеке был отклонен.');
-            }
-
-            setStatus('')
-            return uri;
-        } catch (error) {
-            console.log('got error', error.message);
-            Alert.alert('Ошибка', error.message);
-            setStatus('')
-        }
-    }
+    // const sharingFile = async () => {
+    //     // const filepath = `${FileSystem.documentDirectory}${fileName}`;
+    //     try {
+    //         const {uri} = await FileSystem.downloadAsync(imageUri, filepath);
+    //         // console.log('downloaded at:', uri);
+    //
+    //         const {status} = await MediaLibrary.requestPermissionsAsync();
+    //         if (status === 'granted') {
+    //             const asset = await MediaLibrary.createAssetAsync(uri);
+    //             await MediaLibrary.createAlbumAsync('Download', asset, false);
+    //             // Alert.alert('Успех', 'Изображение сохранено в галерею!');
+    //         } else {
+    //             Alert.alert('Разрешение отклонено', 'Доступ к медиабиблиотеке был отклонен.');
+    //         }
+    //
+    //         setStatus('')
+    //         return uri;
+    //     } catch (error) {
+    //         console.log('got error', error.message);
+    //         Alert.alert('Ошибка', error.message);
+    //         setStatus('')
+    //     }
+    // }
 
 //     handle
     const handleSharing = async () => {
         setStatus('sharing')
-        let uri = await sharingFile();
+        // let uri = await sharingFile();
+        //
+        // if (uri) {
+        //     //Sharing file
+        //     await Sharing.shareAsync(uri)
+        // }
 
-        if (uri) {
-            //Sharing file
-            await Sharing.shareAsync(uri)
-        }
-
+        // Универсальная функция для шаринга
+        // setStatus('sharing');
+        await handleFileAction({
+            actionType: 'share',
+            imageUri,
+            fileName,
+            showToast
+        });
+        setStatus('');
     }
 //     handle
 
@@ -203,9 +224,9 @@ const ImageScreen = () => {
         });
     }
 
-    const toastConfig={
-        success:({text1,props,...rest})=>{
-            return(
+    const toastConfig = {
+        success: ({text1, props, ...rest}) => {
+            return (
                 <View style={styles.wrapperToast}>
                     <Text style={styles.textToast}>{text1}</Text>
                 </View>
@@ -233,7 +254,7 @@ const ImageScreen = () => {
                 </View>
 
                 <Animated.View
-                    entering={FadeInUp.delay(100).springify().damping(10)}
+                    // entering={FadeInUp.delay(100).springify().damping(10)}
                 >
                     <Image
                         transition={100}
@@ -245,67 +266,15 @@ const ImageScreen = () => {
                 </Animated.View>
             </View>
 
-            <View style={styles.wrapperButtons}>
-                {/*button close*/}
-                <Animated.View
-                    entering={FadeInDown.delay(100).springify()}
-                >
-                    <TouchableOpacity
-                        onPress={() => router.back()}
-                        style={styles.button}
-                    >
-                        <Octicons name="x" size={24} color="white"/>
-                    </TouchableOpacity>
-                </Animated.View>
+            {/* buttons bottom image */}
+            <ButtonsBottomImage
+                status={status}
+                handleDownload={handleDownload}
+                handleSharing={handleSharing}
+                platformMobile={platformMobile}
+            />
 
-                {/*button download*/}
-                <Animated.View
-                    entering={FadeInDown.delay(200).springify()}
-                >
-                    {
-                        status === 'downloaded'
-                            ? (
-                                <View style={styles.button}>
-                                    <LoaderStandard/>
-                                </View>
-                            )
-                            : (
-                                <TouchableOpacity
-                                    onPress={handleDownload}
-                                    style={styles.button}
-                                >
-                                    <Octicons name="download" size={24} color="white"/>
-                                </TouchableOpacity>
-                            )
-                    }
-
-                </Animated.View>
-
-                {/*button download*/}
-                <Animated.View
-                    entering={FadeInDown.delay(200).springify()}
-                >
-                    {
-                        status === 'sharing'
-                            ? (
-                                <View style={styles.button}>
-                                    <LoaderStandard/>
-                                </View>
-                            )
-                            : (
-                                <TouchableOpacity
-                                    onPress={handleSharing}
-                                    style={styles.button}
-                                >
-                                    <Entypo name="share" size={24} color="white"/>
-                                </TouchableOpacity>
-                            )
-                    }
-
-                </Animated.View>
-            </View>
-
-            <Toast  config={toastConfig} visibilityTime={2500} />
+            <Toast config={toastConfig} visibilityTime={2500}/>
 
         </BlurView>
     );
@@ -349,43 +318,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    wrapperButtons: {
-        flexDirection: 'row',
-        marginTop: 40,
-        gap: 50,
-    },
-    button: {
-        backgroundColor: theme.colors.neutral(0.2),
-        // padding:10,
-        width: hp(6),
-        height: hp(6),
+
+    wrapperToast: {
+        padding: 15,
+        paddingHorizontal: 30,
+        borderRadius: theme.radius.xl,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: theme.colors.grayBG,
-        borderRadius: theme.radius.lg,
-        borderCurve: 'continuous',
-        // padding:20,
-        // box shadow
-        shadowColor: theme.colors.shadowColor,
-        // shadowColor: 'white',
-        shadowRadius: 1,
-        shadowOffset: {width: 1, height: 3},
-        shadowOpacity: 0.9,
-        elevation: 5, // Для Android
+        backgroundColor: theme.colors.neutral(0.8)
     },
-    wrapperToast:{
-        padding:15,
-        paddingHorizontal:30,
-        borderRadius:theme.radius.xl,
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:theme.colors.neutral(0.8)
-    },
-    textToast:{
-        fontSize:hp(1.8),
-        fontWeight:theme.fontWeights.semibold,
-        color:theme.colors.white
+    textToast: {
+        fontSize: hp(1.8),
+        fontWeight: theme.fontWeights.semibold,
+        color: theme.colors.white
     }
 
 

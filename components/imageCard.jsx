@@ -24,17 +24,19 @@ const ImageCard = ({item, index, columns, router}) => {
     return (
         <TouchableOpacity
             onPress={() => router.push({
-                pathname:'home/imageScreen',
-                params:{...item}
+                pathname: 'home/imageScreen',
+                params: {...item}
             })}
             style={[styles.imageWrapper, !isLastInRow() && styles.spacing]}
         >
+            <View style={styles.wrapperImage}>
             <Image
                 style={[styles.image, getImageHeight()]}
                 source={item?.webformatURL}
                 contentFit="cover"
                 transition={100}
             />
+            </View>
 
 
         </TouchableOpacity>
@@ -43,25 +45,37 @@ const ImageCard = ({item, index, columns, router}) => {
 
 const styles = StyleSheet.create({
     imageWrapper: {
-        backgroundColor: theme.colors.grayBG,
+        // backgroundColor: theme.colors.grayBG,
+        backgroundColor: 'transparent',
         borderRadius: theme.radius.xl,
         borderCurve: 'continuous',
         // overflow: 'hidden',
         marginBottom: wp(2),
+        padding:5,
+
+
+
+
+    },
+    wrapperImage:{
+        borderRadius: theme.radius.xl,
+        // width:'100%',
+        // height:'100%',
+        // backgroundColor: 'transparent',
         // Настройки для тени на iOS и вебе
         shadowColor: 'black',
         shadowOffset: {width: 3, height: 3},
         shadowOpacity: 0.5,
         shadowRadius: 3,
         // Тень для Android
-        elevation: 5,
-
+        // elevation: 5,
     },
     image: {
         width: '100%',
         height: '100%',
         borderRadius: theme.radius.xl,
         overflow: 'hidden',
+
     },
     spacing: {
         marginRight: wp(2),

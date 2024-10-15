@@ -25,9 +25,11 @@ export const getColumnCount = () => {
     } else if (deviceWidth > 768) {
         //tablet
         return 3;
-    } else {
+    } else if (deviceWidth > 389){
         //phone
         return 2;
+    }else{
+        return 1;
     }
 
 }
